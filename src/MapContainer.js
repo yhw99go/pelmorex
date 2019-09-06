@@ -1,13 +1,18 @@
 import React from 'react';
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 export class MapContainer extends React.Component {
-    state = {
-      showingInfoWindow: false,
-      poisData: [],
-      activeMarker: {},
-      selectedPlace: {},
-    };
+    constructor(props){
+        super(props);
+        this.state = {
+            showingInfoWindow: false,
+            poisData: [],
+            activeMarker: {},
+            selectedPlace: {},
+          };
+    }
+
   
     onMarkerClick = (props, marker, e) =>
       this.setState({
@@ -29,7 +34,6 @@ export class MapContainer extends React.Component {
         let ne = map.getBounds().getNorthEast();
         let sw = map.getBounds().getSouthWest();
         this.getBounds(ne,sw)
-        console.log(this.state.poisData)
     };
 
     getBounds(ne,sw) {
@@ -59,9 +63,36 @@ export class MapContainer extends React.Component {
         .then(json => {this.setState({poisData: json})})
         .catch(error => console.error('Error:', error));
     }
+
+    markerGenerator = () => {
+        const {poisData} = this.state;
+  
+        if (poisData.length === 0){
+            return null;
+        } 
+        else {
+            return (
+                poisData.pois.map((item) => 
+                <Marker
+                    key = {item.id}
+                    title={item.label}
+                    name={item.name}
+                    position={{lat: item.center.lat, lng: item.center.lon}}
+                    onClick={this.onMarkerClick}> 
+                </Marker> 
+                )
+            );
+        }
+    }
+    goHome = (e) => {
+        console.log(e)
+        this.props.history.push(`/poidetail/${e}`)
+    }
+
   
     render() {
-    
+    const {poisData} = this.state;
+
       return (
         <Map google={this.props.google}
             style={ { height: `700px`, margin: `30px` }}
@@ -72,16 +103,15 @@ export class MapContainer extends React.Component {
             zoom={15}
             onIdle={this.onMapIdle}
             onClick={this.onMapClicked}>
-          <Marker onClick={this.onMarkerClick}
-                  name={'Current location'} />
-  
-          <InfoWindow
-            marker={this.state.activeMarker}
-            visible={this.state.showingInfoWindow}>
-              <div>
-                <h1>{this.state.selectedPlace.name}</h1>
-              </div>
-          </InfoWindow>
+            {this.markerGenerator()}
+            <InfoWindow onClick ={this.try}
+                marker={this.state.activeMarker}
+                visible={this.state.showingInfoWindow}>
+                <div>
+                    <h2>{this.state.selectedPlace.title}</h2>
+                    <button onClick={this.goHome} />
+                </div>
+            </InfoWindow>
         </Map>
       )
     }
