@@ -2,26 +2,31 @@ import React from 'react';
 import logo from './logo.svg';
 import MapContainer from './MapContainer.js'
 import Poidetail from './Poidetail.js'
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter, Route, Link } from "react-router-dom";
+import './App.css'
 
+const HeaderComponent = () => {
+  return (
+      <div className="App-header"><Link to="/map"><img src={logo} className="App-logo" alt="logo" /></Link></div>
+  )
+}
 
 class App extends React.Component {
-  constructor(props) {
-    super(props)
-  }
+
 
   render() {
     return (
-      <Router>
       <div className="App">
-          <Route path="/map" exact component={MapContainer} />
-          <Route path="/poidetail" component={Poidetail} />
+          <BrowserRouter>
+          <HeaderComponent />
+            <div>
+                <Route exact path="/map" component={MapContainer} />
+                <Route path="/poidetail" component={Poidetail} />
+            </div>
+          </BrowserRouter>
       </div>
-      </Router>
     );
   } 
-
-
   }
 
   export default App;

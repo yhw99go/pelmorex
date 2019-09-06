@@ -12,8 +12,7 @@ export class MapContainer extends React.Component {
             selectedPlace: {},
           };
     }
-
-  
+    
     onMarkerClick = (props, marker, e) =>
       this.setState({
         selectedPlace: props,
@@ -35,6 +34,19 @@ export class MapContainer extends React.Component {
         let sw = map.getBounds().getSouthWest();
         this.getBounds(ne,sw)
     };
+
+    windowHasOpened = () => {
+        console.log("open")
+    }
+
+    renderLink = (data) => {
+      console.log(data)
+      return(
+        <div>
+          <span>{data}</span>
+        </div>
+      )
+  }
 
     getBounds(ne,sw) {
         var url = 'https://poi.data.pelmorex.com/api/v1/pois/search';
@@ -97,15 +109,11 @@ export class MapContainer extends React.Component {
             onIdle={this.onMapIdle}
             onClick={this.onMapClicked}>
             {this.markerGenerator()}
-            <InfoWindow onClick ={this.try}
+            <InfoWindow
+                onOpen={this.windowHasOpened}
                 marker={this.state.activeMarker}
                 visible={this.state.showingInfoWindow}>
-                <div>
-                    <h2>{this.state.selectedPlace.title}</h2>
-                    <Router>
-                      <Link to={{ pathname: `/poidetail`, state: { foo: this.state.selectedPlace.name }}}>aaa</Link>
-                    </Router>
-                </div>
+                {/* {this.markerGenerator(this.state.selectedPlace.title)} */}
             </InfoWindow>
         </Map>
       )
