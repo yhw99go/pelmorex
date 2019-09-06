@@ -1,6 +1,6 @@
 import React from 'react';
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import ReactDOM from 'react-dom';
 
 export class MapContainer extends React.Component {
     constructor(props){
@@ -35,20 +35,14 @@ export class MapContainer extends React.Component {
         this.getBounds(ne,sw)
     };
 
-    windowHasOpened = () => {
-        console.log("open")
+    onInfoWindowOpen = (props, e) => {
+      const button = (<button onClick={e => {
+        this.props.history.push(`/poidetail`, {label: this.state.selectedPlace.title})
+      }}>go to detail</button>);
+      ReactDOM.render(React.Children.only(button), document.getElementById("iwc"));
     }
 
-    renderLink = (data) => {
-      console.log(data)
-      return(
-        <div>
-          <span>{data}</span>
-        </div>
-      )
-  }
-
-    getBounds(ne,sw) {
+    getBounds (ne,sw) {
         var url = 'https://poi.data.pelmorex.com/api/v1/pois/search';
         var params = {
                 "client_key": "51e05a51-5caf-42db-aedf-d658eb88f2af",
@@ -78,7 +72,6 @@ export class MapContainer extends React.Component {
 
     markerGenerator = () => {
         const {poisData} = this.state;
-  
         if (poisData.length === 0){
             return null;
         } 
@@ -87,10 +80,10 @@ export class MapContainer extends React.Component {
                 poisData.pois.map((item) => 
                 <Marker
                     key = {item.id}
-                    title={item.label}
-                    name={item.name}
-                    position={{lat: item.center.lat, lng: item.center.lon}}
-                    onClick={this.onMarkerClick}> 
+                    title = {item.label}
+                    name = {item.name}
+                    position = {{lat: item.center.lat, lng: item.center.lon}}
+                    onClick = {this.onMarkerClick}> 
                 </Marker> 
                 )
             );
@@ -110,10 +103,13 @@ export class MapContainer extends React.Component {
             onClick={this.onMapClicked}>
             {this.markerGenerator()}
             <InfoWindow
-                onOpen={this.windowHasOpened}
+                onOpen={this.onInfoWindowOpen}
                 marker={this.state.activeMarker}
                 visible={this.state.showingInfoWindow}>
-                {/* {this.markerGenerator(this.state.selectedPlace.title)} */}
+                <div>
+                  <span>{this.state.selectedPlace.title}</span>
+                  <div id="iwc" />
+                </div>
             </InfoWindow>
         </Map>
       )

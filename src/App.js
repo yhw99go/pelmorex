@@ -5,14 +5,7 @@ import Poidetail from './Poidetail.js'
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import './App.css'
 
-const HeaderComponent = () => {
-  return (
-      <div className="App-header"><Link to="/map"><img src={logo} className="App-logo" alt="logo" /></Link></div>
-  )
-}
-
 class App extends React.Component {
-
 
   render() {
     return (
@@ -29,4 +22,10 @@ class App extends React.Component {
   } 
   }
 
+  const HeaderComponent = () => {
+    return (
+        <div className="App-header"><Link to="/map"><img src={logo} className="App-logo" alt="logo" /></Link></div>
+    )
+  }
+  
   export default App;
