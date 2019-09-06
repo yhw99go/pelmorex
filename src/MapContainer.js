@@ -84,15 +84,8 @@ export class MapContainer extends React.Component {
             );
         }
     }
-    goHome = (e) => {
-        console.log(e)
-        this.props.history.push(`/poidetail/${e}`)
-    }
 
-  
     render() {
-    const {poisData} = this.state;
-
       return (
         <Map google={this.props.google}
             style={ { height: `700px`, margin: `30px` }}
@@ -109,7 +102,9 @@ export class MapContainer extends React.Component {
                 visible={this.state.showingInfoWindow}>
                 <div>
                     <h2>{this.state.selectedPlace.title}</h2>
-                    <button onClick={this.goHome} />
+                    <Router>
+                      <Link to={{ pathname: `/poidetail`, state: { foo: this.state.selectedPlace.name }}}>aaa</Link>
+                    </Router>
                 </div>
             </InfoWindow>
         </Map>
