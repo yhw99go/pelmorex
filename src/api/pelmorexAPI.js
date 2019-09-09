@@ -3,9 +3,9 @@ function paramsToQueryString(params) {
 }
 
 export function getBoundsWithDetail(ne, sw) {
-    var url = 'https://poi.data.pelmorex.com/api/v1/pois/search';
+    var url = process.env.REACT_APP_PERMOREX_API;
     var params = {
-            "client_key": "51e05a51-5caf-42db-aedf-d658eb88f2af",
+            "client_key": process.env.REACT_APP_PERMOREX_API_CLIENT_ID,
             "poi_fields" : "id,name,label,center"
     }
     var data = {
@@ -26,5 +26,4 @@ export function getBoundsWithDetail(ne, sw) {
         'Content-Type': 'application/json'
         }
     })
-
 }
