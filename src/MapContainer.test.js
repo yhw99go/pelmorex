@@ -21,16 +21,6 @@ describe('MapContainer', () => {
     const wrapper = shallow(<MapContainer />);
     expect(wrapper.find('InfoWindow')).to.have.length(1);
   }); 
-
-/*   it('check api and getbounds working ', () => {
-    const wrapper = shallow(<MapContainer />);
-    const ne =  { "lat": 43.664066723754026, "lng": -79.3578799468994 }
-    const sw = { "lat": 43.642331309589274, "lng": -79.40852005310057 }
-    wrapper.instance().getBounds(ne,sw)
-    console.log(wrapper.state())
-    expect(wrapper.state().poisData).to.have.length(13);
-  });  */
-
  
   it('Check marker are generated', () => {
        const wrapper = shallow(<MapContainer />);
