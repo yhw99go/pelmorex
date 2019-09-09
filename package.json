@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "chai": "^4.2.0",
     "google-maps-react": "^2.0.2",
     "install": "^0.13.0",
     "npm": "^6.11.3",
