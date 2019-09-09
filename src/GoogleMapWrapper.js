@@ -1,5 +1,4 @@
-import React from 'react';
-import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import {GoogleApiWrapper} from 'google-maps-react';
 import MapContainer from './MapContainer.js'
 
 export default GoogleApiWrapper({
