@@ -3,7 +3,7 @@ function paramsToQueryString(params) {
 }
 
 export function getBoundsWithDetail(ne, sw) {
-    var url = 'process.env.REACT_APP_NOT_SECRET_CODE';
+    var url = 'https://poi.data.pelmorex.com/api/v1/pois/search';
     var params = {
             "client_key": "51e05a51-5caf-42db-aedf-d658eb88f2af",
             "poi_fields" : "id,name,label,center"
