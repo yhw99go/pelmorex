@@ -1,25 +1,26 @@
 import React from 'react';
-import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import { getBoundsWithDetail } from './api/pelmorexAPI.js'
+import {Map, InfoWindow, Marker } from 'google-maps-react';
 import ReactDOM from 'react-dom';
 
 export default class MapContainer extends React.Component {
     constructor(props){
-        console.log(props)
         super(props);
         this.state = {
             showingInfoWindow: false,
             poisData: [],
             activeMarker: {},
-            selectedPlace: {},
+            selectedPlace: {}
           };
     }
     
-    onMarkerClick = (props, marker, e) =>
+    onMarkerClick = (props, marker, e) => {
       this.setState({
         selectedPlace: props,
         activeMarker: marker,
         showingInfoWindow: true
       });
+    }
   
     onMapClicked = (props) => {
       if (this.state.showingInfoWindow) {
@@ -43,30 +44,8 @@ export default class MapContainer extends React.Component {
       ReactDOM.render(React.Children.only(button), document.getElementById("iwc"));
     }
 
-    getBounds (ne,sw) {
-        var url = 'https://poi.data.pelmorex.com/api/v1/pois/search';
-        var params = {
-                "client_key": "51e05a51-5caf-42db-aedf-d658eb88f2af",
-                "poi_fields" : "id,name,label,center"
-        }
-        var data = {
-            "filters": {
-                "bounding_box": {
-                    "top_left_lat": ne.lat(),
-                    "top_left_lon": sw.lng(),
-                    "bottom_right_lat": sw.lat(),
-                    "bottom_right_lon": ne.lng()
-                }
-            }
-        }
-
-        fetch(url + "?" + Object.keys(params).map((key) => { return key + "=" + params[key] }).join("&"), {
-            method: 'POST',
-            body: JSON.stringify(data), 
-            headers:{
-            'Content-Type': 'application/json'
-            }
-        }).then(response => response.json())
+    getBounds (ne, sw) {
+      getBoundsWithDetail(ne, sw).then(response => response.json())
         .then(json => {this.setState({poisData: json})})
         .catch(error => console.error('Error:', error));
     }
@@ -116,7 +95,3 @@ export default class MapContainer extends React.Component {
       )
     }
   }
-
-GoogleApiWrapper({
-  apiKey: ("AIzaSyBY1dvS9jsf5VBlZJhkYCNxEj3o0DhI4zM")
-})(MapContainer)
