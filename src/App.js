@@ -20,12 +20,12 @@ class App extends React.Component {
       </div>
     );
   } 
-  }
+}
 
-  const HeaderComponent = () => {
-    return (
-        <div className="App-header"><Link to="/map"><img src={logo} className="App-logo" alt="logo" /></Link></div>
-    )
-  }
-  
-  export default App;
+const HeaderComponent = () => {
+  return (
+      <div className="App-header"><Link to="/map"><img src={logo} className="App-logo" alt="logo" /></Link></div>
+  )
+}
+
+export default App;
