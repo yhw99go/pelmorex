@@ -2,8 +2,9 @@ import React from 'react';
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 import ReactDOM from 'react-dom';
 
-export class MapContainer extends React.Component {
+export default class MapContainer extends React.Component {
     constructor(props){
+        console.log(props)
         super(props);
         this.state = {
             showingInfoWindow: false,
@@ -116,6 +117,6 @@ export class MapContainer extends React.Component {
     }
   }
 
-export default GoogleApiWrapper({
+GoogleApiWrapper({
   apiKey: ("AIzaSyBY1dvS9jsf5VBlZJhkYCNxEj3o0DhI4zM")
 })(MapContainer)

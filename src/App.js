@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from './logo.svg';
-import MapContainer from './MapContainer.js'
+import GoogleMapWrapper from './GoogleMapWrapper.js'
 import Poidetail from './Poidetail.js'
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import './App.css'
@@ -13,7 +13,7 @@ class App extends React.Component {
           <BrowserRouter>
           <HeaderComponent />
             <div>
-                <Route exact path="/map" component={MapContainer} />
+                <Route exact path="/map" component={GoogleMapWrapper} />
                 <Route path="/poidetail" component={Poidetail} />
             </div>
           </BrowserRouter>

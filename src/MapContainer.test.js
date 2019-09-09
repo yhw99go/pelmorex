@@ -1,19 +1,15 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import renderer from 'react-test-renderer'
-import MapContainer from './MapContainer.js';
+import MapContainer from './MapContainer';
 
 describe('MapContainer', () => {
 
- it('on map click window box state changed', () => {
-    const props = {
-        showingInfoWindow: false,
-        poisData: [],
-        activeMarker: {},
-        selectedPlace: {},
-      }
-    const wrapper = mount(<MapContainer {...props} />)
-    console.log(wrapper.instance())
+ it('on map click window box status change', () => {
+    const wrapper = shallow(<MapContainer />);
+    wrapper.setState({ showingInfoWindow: true });
+    wrapper.instance().onMapClicked()
+    expect(wrapper.state().showingInfoWindow).toBe(false);
   }); 
 
 
